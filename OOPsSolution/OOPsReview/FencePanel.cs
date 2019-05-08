@@ -13,19 +13,34 @@ namespace OOPsReview
     //for a class to hold data, do not make it static, unless you want everyone to be able to access it (rw)
     public class FencePanel
     {
-        public int height;
-        public int width;
+        //properties are associated with a single piece of data
+        //a property has two subcomponents - get and set
+        //get returns a value to the calling method (client)
+        //the keyword used to represent incoming data is 'value'
+        // a property DOES NOT TAKE a parameter
+        private int _height;
+        private int _width;
 
         
+
         public int GetHeight()
         {
-            return height;
+            return _height;
         }
 
         public void SetHeight(int myDataHeight)
         {
-            height = myDataHeight;
+            _height = myDataHeight;
         }
-       
+
+        public int GetWidth()
+        {
+            return _width;
+        }
+
+        public void SetWidth(int myDataWidth)
+        {
+            _width = myDataWidth;
+        }
     }
 }

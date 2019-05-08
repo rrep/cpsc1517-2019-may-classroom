@@ -26,6 +26,7 @@ namespace OOPsReview
             FencePanel twoVariable = new FencePanel();
             //assign some height yo
             twoVariable.SetHeight(12);
+            twoVariable.SetWidth(10);
             if (aVariable == null)
             { 
                 Console.WriteLine("aVariable Doesn't got nothin in it.");
