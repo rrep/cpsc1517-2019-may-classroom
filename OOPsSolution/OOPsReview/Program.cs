@@ -21,9 +21,9 @@ namespace OOPsReview
 
             //create an instance of a non static class
             //if you create a declarative using just the class name then this is only a pointer that can hold an instance of the class
-            myData aVariable = null;
+            FencePanel aVariable = null;
             //current value of aVariable is null. It is just a pointer.
-            myData twoVariable = new myData();
+            FencePanel twoVariable = new FencePanel();
             //assign some height yo
             twoVariable.SetHeight(12);
             if (aVariable == null)
