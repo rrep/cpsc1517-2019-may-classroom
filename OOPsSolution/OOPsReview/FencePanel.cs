@@ -27,7 +27,7 @@ namespace OOPsReview
 
         //here is an example of the constructor with parameters
         //this is called the "greedy" constructor
-        public FencePanel(int height, int width, double? price, string style)
+        public FencePanel(double height, double width, double? price, string style)
         {
             _height = height;
             _width = width;
@@ -41,27 +41,27 @@ namespace OOPsReview
         //get returns a value to the calling method (client)
         //the keyword used to represent incoming data is 'value'
         // a property DOES NOT TAKE a parameter
-        private int _height;
-        private int _width;
+        private double _height;
+        private double _width;
 
         
    
-        public int GetHeight()
+        public double GetHeight()
         {
             return _height;
         }
 
-        public void SetHeight(int myDataHeight)
+        public void SetHeight(double myDataHeight)
         {
             _height = myDataHeight;
         }
 
-        public int GetWidth()
+        public double GetWidth()
         {
             return _width;
         }
 
-        public void SetWidth(int myDataWidth)
+        public void SetWidth(double myDataWidth)
         {
             _width = myDataWidth;
         }
@@ -92,6 +92,15 @@ namespace OOPsReview
                     _Style = value;
                 }
             }
+        }
+
+        //behaviour - these are methods for the class
+        public double EstimatedNumberOfPanels(double linearLength, double gateWidth, int numberOfGates)
+        {
+            double numberOfPanels, totalgatewidth = gateWidth * numberOfGates;
+            double fenceWidth = linearLength - totalgatewidth;
+            numberOfPanels = fenceWidth / GetWidth();
+            return numberOfPanels;
         }
     }
 }
