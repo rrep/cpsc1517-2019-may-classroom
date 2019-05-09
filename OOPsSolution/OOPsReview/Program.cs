@@ -23,7 +23,10 @@ namespace OOPsReview
             //if you create a declarative using just the class name then this is only a pointer that can hold an instance of the class
             FencePanel aVariable = null;
             //current value of aVariable is null. It is just a pointer.
-            FencePanel twoVariable = new FencePanel();
+            FencePanel twoVariable = new FencePanel(10, 10, 50, "weird");
+            Console.WriteLine(twoVariable.GetWidth());
+            Console.WriteLine(twoVariable.Price);
+            Console.WriteLine(twoVariable.Style);
             //assign some height yo
             twoVariable.SetHeight(12);
             twoVariable.SetWidth(10);
