@@ -41,6 +41,49 @@ namespace OOPsReview
             }
 
             //using instances of classes
+
+            string menuItem = "0";
+
+            FenceEstimate CustomerFence = new FenceEstimate();
+            CustomerFence.Fence = twoVariable;
+            CustomerFence.Gates = null;
+            Gate newGate = null;
+            do
+            {
+                newGate = new Gate();
+                Console.WriteLine("Please enter height:");
+                string inputValue = Console.ReadLine();
+                newGate.Height = int.Parse(inputValue);
+                Console.WriteLine("Please enter width:");
+                inputValue = Console.ReadLine();
+                newGate.Width = int.Parse(inputValue);
+                Console.WriteLine("Please enter style:");
+                inputValue = Console.ReadLine();
+                newGate.Style = inputValue;
+
+                Console.WriteLine("Please enter price:");
+                inputValue = Console.ReadLine();
+                if (string.IsNullOrEmpty(inputValue))
+                { newGate.Price = null; }
+                else
+                { newGate.Price = double.Parse(inputValue); }
+                newGate.Width = int.Parse(inputValue);
+
+                Console.WriteLine("Another Gate? (Y/N)");
+                Console.ReadLine();
+                //ternary operators
+                //they are basically if statements that do not contain the if/else syntax.
+                //syntax:  condition ? truevalue : falsevalue - only works if it is resolving into a true or false
+                //ternary operators can be nested as long as it resolves to a single value.
+
+                menuItem = inputValue.ToUpper().Equals("Y") ? "1" : "0";
+
+
+                CustomerFence.Gates.Add(newGate);
+                
+
+            } while (menuItem != "0");
+            Console.ReadKey();
         }
     }
 }

@@ -12,21 +12,21 @@ namespace OOPsReview
         public double? Price { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
-        private string _Style {
+        public string Style {
             get
             {
-                return _Style;
+                return Style;
             }
             set
             {
 
                 if (string.IsNullOrEmpty(value))
                 {
-                    _Style = null;
+                    Style = null;
                 }
                 else
                 {
-                    _Style = value;
+                    Style = value;
                 }
             }
         }
