@@ -12,24 +12,7 @@ namespace OOPsReview
         public double? Price { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
-        public string Style {
-            get
-            {
-                return Style;
-            }
-            set
-            {
-
-                if (string.IsNullOrEmpty(value))
-                {
-                    Style = null;
-                }
-                else
-                {
-                    Style = value;
-                }
-            }
-        }
+        public string Style { get; set; }
 
         //read-only property. Contains no set{}. data used in this property is data that is currently within the instance of this class.
         //this is a method that is created to call a specific property to reduce calculations required by the developers
@@ -52,7 +35,7 @@ namespace OOPsReview
             Height = height;
             Width = width;
             Price = price;
-            _Style = style;
+            Style = style;
         }
     }
 }

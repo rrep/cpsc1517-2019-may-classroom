@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FenceEstimate.cs" />
     <Compile Include="Gate.cs" />
     <Compile Include="FencePanel.cs" />
     <Compile Include="Program.cs" />
