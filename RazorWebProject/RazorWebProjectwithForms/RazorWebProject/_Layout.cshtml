@@ -7,10 +7,20 @@
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/firstpage.css" rel="stylesheet" />
     @RenderSection("head", required: false)
 </head>
 <body>
     <nav></nav>
-    @RenderBody()
+    <div class="container-fluid">
+        <div class="jumbotron">
+            @RenderSection("banner")
+        </div>
+        @RenderBody()
+        <hr style="width:5px" />
+        @RenderSection("footer", required:false)
+        <br />
+        &copy; CPSC1517 NAIT Learning Material
+    </div>
 </body>
 </html>

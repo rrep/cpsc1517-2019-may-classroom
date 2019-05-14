@@ -2,5 +2,6 @@
 }
 
 .data {
-    white-space: pre;
+    white-space: pre-line;
+    display:block;
 }
