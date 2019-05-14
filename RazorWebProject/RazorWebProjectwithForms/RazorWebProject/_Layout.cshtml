@@ -17,10 +17,11 @@
             @RenderSection("banner")
         </div>
         @RenderBody()
-        <hr style="width:5px" />
+        <hr style="height:5px">
         @RenderSection("footer", required:false)
         <br />
-        &copy; CPSC1517 NAIT Learning Material
+        &copy; CPSC1517 NAIT Learning Material<br />
+        @DateTime.Today.ToShortTimeString()
     </div>
 </body>
 </html>

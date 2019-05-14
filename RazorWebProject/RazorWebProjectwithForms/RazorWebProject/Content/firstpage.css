@@ -5,3 +5,20 @@
     white-space: pre-line;
     display:block;
 }
+
+blink {
+
+}
+
+.cat-one {
+    animation: blink 1s steps(5, start) infinite;
+}
+
+.cat-two {
+}
+
+.cat-three {
+}
+
+.cat-four {
+}
