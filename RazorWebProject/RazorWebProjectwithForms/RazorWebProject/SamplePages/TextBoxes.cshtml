@@ -14,10 +14,23 @@
     var leftdata = Request.Form["controlleft"];
     var rightdata = Request.Form["controlright"];
     var thebutton = Request.Form["formbutton"];
+    var results = ""; //page local variable
 }
 
 @section banner{
     <h1>Razor Syntax Demo - TextBoxes</h1>
+}
+@if (IsPost)
+{
+    <p>You Pressed the @thebutton  button</p>
+    if (thebutton.Equals("Left"))
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
 <form id="theForm" method="post">
@@ -30,18 +43,18 @@
         </div>
     </div>
     <div class="row">
-       <div class="col-md-6">
-           <label for="controlleft" id="lefttitle">Left Side</label>
+        <div class="col-md-6">
+            <label for="controlleft" id="lefttitle">Left Side</label>
             <input type="text" id="controlleft" name="controlleft" placeholder="Enter Some Data" />
-           <br/>
-           <input type="submit" id="formbutton" name="formbutton" class="btn" value="Left" />
-       </div>
-       <div class="col-md-6">
-           <label for="controlright" id="righttitle">Right Side</label>
-           <input type="text" id="controlright" name="controlright" placeholder="Enter Some Data" />
-           <br />
-           <input type="submit" id="formbutton" name="formbutton" class="btn" value="Right" />
-       </div>
+            <br />
+            <input type="submit" id="formbutton" name="formbutton" class="btn" value="Left" />
+        </div>
+        <div class="col-md-6">
+            <label for="controlright" id="righttitle">Right Side</label>
+            <input type="text" id="controlright" name="controlright" placeholder="Enter Some Data" />
+            <br />
+            <input type="submit" id="formbutton" name="formbutton" class="btn" value="Right" />
+        </div>
     </div>
 
 </form>

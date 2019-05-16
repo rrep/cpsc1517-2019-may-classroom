@@ -17,7 +17,7 @@
 
 
 .cat-one {
-    color: red;
+    color: darkorange;
     position: relative;
     right: 6px;
     animation: blinker 2s steps(1, start) infinite;
