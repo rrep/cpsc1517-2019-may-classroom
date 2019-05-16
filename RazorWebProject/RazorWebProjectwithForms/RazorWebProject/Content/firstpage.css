@@ -6,19 +6,118 @@
     display:block;
 }
 
-blink {
-
+.blink {
+    width: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    margin: 1em 0;
 }
 
+
 .cat-one {
-    animation: blink 1s steps(5, start) infinite;
+    color: red;
+    position: relative;
+    right: 6px;
+    animation: blinker 2s steps(1, start) infinite;
 }
 
 .cat-two {
+    color: black;
+    position: relative;
+    bottom: 170px;
+    animation: alt-blink-animation 2s steps(1, start) infinite;
 }
 
 .cat-three {
+    color: black;
+    position: relative;
+    bottom: 345px;
+    animation: blink-animation 2s steps(1, start) infinite;
 }
 
 .cat-four {
+    color: black;
+    position: relative;
+    bottom: 520px;
+    animation: alt-blinker 2s steps(1, start) infinite;
+}
+
+.navbar-brand {
+    font-size:x-large;
+    font-weight: bolder;
+}
+
+@keyframes blinker {
+    0% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes alt-blink-animation {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0;
+
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink-animation {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes alt-blinker {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

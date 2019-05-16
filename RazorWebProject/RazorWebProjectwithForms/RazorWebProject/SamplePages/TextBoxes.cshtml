@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "TextBoxes";
+
+    //retrieve the data from the form controls
+    //the form controls can be accessed via the Request object
+    // the request object has several collections
+    //form controls are found in the .Form collect
+    //a particular control is referenced by its name in the form collection
+    //syntax is Request.Form["namestring"]
+    //GENERALLY ALL data form controls are strings
+    //what is a var? it is a datatype that is not defined at compile time.
+
+    var leftdata = Request.Form["controlleft"];
+    var rightdata = Request.Form["controlright"];
+    var thebutton = Request.Form["formbutton"];
+}
+
+@section banner{
+    <h1>Razor Syntax Demo - TextBoxes</h1>
+}
+
+<form id="theForm" method="post">
+    <div class="row">
+        <div class="col-md-offset-4">
+            <!--For Statement is used for accessibility software, like reading software. It matches up with the id-->
+            <label id="Concerns" for="Results"> Results: </label>
+            <input type="text" id="Results" name="Results"
+                   readonly="readonly">
+        </div>
+    </div>
+    <div class="row">
+       <div class="col-md-6">
+           <label for="controlleft" id="lefttitle">Left Side</label>
+            <input type="text" id="controlleft" name="controlleft" placeholder="Enter Some Data" />
+           <br/>
+           <input type="submit" id="formbutton" name="formbutton" class="btn" value="Left" />
+       </div>
+       <div class="col-md-6">
+           <label for="controlright" id="righttitle">Right Side</label>
+           <input type="text" id="controlright" name="controlright" placeholder="Enter Some Data" />
+           <br />
+           <input type="submit" id="formbutton" name="formbutton" class="btn" value="Right" />
+       </div>
+    </div>
+
+</form>
