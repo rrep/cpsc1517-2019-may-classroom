@@ -1,8 +1,59 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "CheckBoxes";
+    var choice = "";
 }
 
 @section banner{
 <h1>Razor Syntax Demo - CheckBoxes</h1>
 }
+
+@{ 
+    if (IsPost)
+    {
+        //this example demonstrates that you can delay retreiving your form data 
+        // to a time when you really need to have it
+        choice = Request.Form["CheckBoxGroup"];
+        if (string.IsNullOrEmpty(choice))
+        {
+            <p><span style="color:firebrick">Make a selection from the list below</span></p>
+            choice = "";
+        }
+        else
+        {
+            <p>I see you like to use the following platforms:
+                <ul>
+                    @{ foreach(var a in choice.Split(','))
+                        {
+                            <li>@a</li>
+                        }
+                    }
+                </ul>
+            </p>
+        }
+    }
+}
+<form id="theform" method="post">
+    <div class="row">
+        <div class="col-sm-offset-1">
+            <div>
+                <label id="CheckBoxGroupLabel" for="CheckBoxGroup">
+                    Select your favorite gaming platform
+                </label><br />
+                <!---checkboxes come in a common separated list of values-->
+                <input type="checkbox" id="CheckBoxGroup" name="CheckBoxGroup" value="PS4"
+                       @(Array.IndexOf(choice.Split(','),"PS4") >= 0?"checked":"")>PS4<br />
+                <input type="checkbox" id="CheckBoxGroup" name="CheckBoxGroup" value="Cell"
+                       @(Array.IndexOf(choice.Split(','),"Cell") >= 0?"checked":"")>Cell<br />
+                <input type="checkbox" id="CheckBoxGroup" name="CheckBoxGroup" value="Nintendo DS"
+                       @(Array.IndexOf(choice.Split(','),"Nintendo DS") >= 0?"checked":"")>Nintendo DS<br />
+                <input type="checkbox" id="CheckBoxGroup" name="CheckBoxGroup" value="PC"
+                       @(Array.IndexOf(choice.Split(','),"PC") >= 0?"checked":"")>PC<br />
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-1">
+                    <input type="submit" class="btn-primary" id="formButton" name="formButton" value="submit" />
+                </div>
+            </div>
+        </div>
+</form>

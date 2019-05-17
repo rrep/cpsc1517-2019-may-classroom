@@ -2,13 +2,72 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Radio Button List";
 
-    var languageGroup = Request.Form["LanguageGroup"];
-    var scriptGroup = Request.Form["ScriptGroup"];
-    var languageColor = "black";
+    var languageGroup = "";
+    var scriptGroup = "";
+
+    languageGroup = Request.Form["LanguageGroup"];
+    scriptGroup = Request.Form["ScriptGroup"];
 }
 
 @section banner{
-<h1>Razor Syntax Demo - Radio Button List</h1>
+    <h1>Razor Syntax Demo - Radio Button List</h1>
+}
+@{
+    if (IsPost)
+    {
+
+        //validate pinput
+        if (string.IsNullOrEmpty(languageGroup) || string.IsNullOrEmpty(scriptGroup))
+        {
+            <p class="language-response"> Put Some Values in Dawg.</p>
+            languageGroup = "";
+            scriptGroup = "";
+        }
+
+        else
+        {
+            var languageColor = "black";
+            switch (languageGroup)
+            {
+                case "C#":
+                    languageColor = "darkyellow";
+                    break;
+
+                case "VB":
+                    languageColor = "blue";
+
+                    break;
+
+                case "Cobol":
+                    languageColor = "orange";
+
+                    break;
+
+                case "Python":
+                    languageColor = "green";
+
+                    break;
+
+                case "Java":
+                    languageColor = "purple";
+
+                    break;
+            }
+
+            <br /><br />
+            <h3 class="language-response">
+                Your Favorite Language is <span style="color: @languageColor">@languageGroup</span>, and your favorite Script is @scriptGroup
+            </h3>
+            if (languageGroup != "C#")
+            {
+                <br /><p>Bad news bud, we don't use that in this class</p>
+            }
+            else
+            {
+                <br /><p>You're in luck, that's what we use here.</p>
+            }
+        }
+    }
 }
 
 <form id="theform" method="post">
@@ -18,71 +77,28 @@
                 Select your favorite programming language
             </label><br />
             <!--- the name for all of the radio buttons that want to be collected as one set of choices will all be the same, so each radio button will have
-    its own unique value. Then when the form is pulled in, it knows which value to assign---->
+            its own unique value. Then when the form is pulled in, it knows which value to assign---->
 
-            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="C#" />C#<br />
-            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="VB" />Visual Basic<br />
-            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="Cobol" />Cobol<br />
-            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="Python" />Python<br />
-            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="Java" />Java<br />
+            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="C#"
+                   checked='@(languageGroup.Equals("C#")?true:false)' />C#<br />
+            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="VB" checked='@(languageGroup.Equals("VB")?true:false)' />Visual Basic<br />
+            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="Cobol" checked='@(languageGroup.Equals("Cobol")?true:false)' />Cobol<br />
+            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="Python" checked='@(languageGroup.Equals("Python")?true:false)' />Python<br />
+            <input type="radio" id="LanguageGroup" name="LanguageGroup" value="Java" checked='@(languageGroup.Equals("Java")?true:false)' />Java<br />
 
             <label id="ScriptGrouplabel" for="ScriptGroup">
                 Select your favorite scripting code
             </label><br />
-            <input type="radio" id="ScriptGroup" name="ScriptGroup" value="JavaScript" />JavaScript<br />
-            <input type="radio" id="ScriptGroup" name="ScriptGroup" value="Razor" />Razor<br />
-            <input type="radio" id="ScriptGroup" name="ScriptGroup" value="PHP" />PHP<br />
+            <input type="radio" id="ScriptGroup" name="ScriptGroup" value="JavaScript" checked='@(scriptGroup.Equals("JavaScript")?true:false)' />JavaScript<br />
+            <input type="radio" id="ScriptGroup" name="ScriptGroup" value="Razor" checked='@(scriptGroup.Equals("Razor")?true:false)' />Razor<br />
+            <input type="radio" id="ScriptGroup" name="ScriptGroup" value="PHP" checked='@(scriptGroup.Equals("PHP")?true:false)' />PHP<br />
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-sm-offset-1">
             <input type="submit" class="btn-primary" id="formButton" name="formButton" value="submit" />
         </div>
-        @{
-            if (IsPost)
-            {
 
-                //validate pinput
-                if (languageGroup.IsEmpty() || scriptGroup.IsEmpty())
-                {
-                    <p> Put Some Values in Dawg.</p>
-                }
-                else { 
-                switch (languageGroup)
-                {
-                    case "C#":
-                        languageColor = "yellow";
-                        break;
-
-                    case "VB":
-                        languageColor = "blue";
-
-                        break;
-
-                    case "Cobol":
-                        languageColor = "orange";
-
-                        break;
-
-                    case "Python":
-                        languageColor = "green";
-
-                        break;
-
-                    case "Java":
-                        languageColor = "purple";
-
-                        break;
-                }
-
-                    <h3>
-                       <br /><br />
-                           Your Favorite Language is <span> style="color: @languageColor">@languageGroup</span>, and your favorite Script is JavaScript
-                    </h3>
-                }
-            }
-
-        }
     </div>
 </form>
