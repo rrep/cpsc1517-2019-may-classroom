@@ -9,8 +9,31 @@
 
     //open a connection to the database
     //use the connection string name attribute value
-
+    //step 1 - open connection to your db
     var db = Database.Open("NWDB");
+
+    //step 2 - create your query command
+    //create the sql query command to retrieve the desired data.
+    //if the query command required a parameter value then you will need to use a placeholder.
+    //placeholder syntax is @n where n is 0, 1, 2, etc..
+    //you can have multiple placeholders
+    //HARDCODED STRINGS CANNOT BE OVER MULTIPLE PHYSICAL LINES!!!!!!!
+    var queryCommand = "SELECT RegionID, RegionDescription "
+        + "FROM Region "
+        + "WHERE RegionID = @0";
+
+    //step 3 - execute your command
+    //the result will be one of the following
+    //a) a single record
+    //b) a dataset of 0, 1, or more records
+    //c) a single value
+
+    //your expected results will determine how you will execute your command.
+    // for a) you will use .QuerySingle()
+    // for b) .Query()
+    // for c) .QueryValue()
+
+    //our search is by primary key, therefore our expected result is a single record.
 }
 
 @section banner{
