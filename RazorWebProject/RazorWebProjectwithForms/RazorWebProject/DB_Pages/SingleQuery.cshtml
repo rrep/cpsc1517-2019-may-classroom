@@ -34,6 +34,11 @@
     // for c) .QueryValue()
 
     //our search is by primary key, therefore our expected result is a single record.
+
+    //the QuerySingle(command string[,comma delimited list of parameter values])
+    //order of parameter values must match the order of placeholders.
+
+    var results = db.QuerySingle(queryCommand,searchArg);
 }
 
 @section banner{
@@ -45,17 +50,17 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="searchArg" id="labelOne">Enter a Region ID:</label>
-                <input type="text" id="searchArg" name="searchArg" placeholder="Enter a Region ID" />
+                <input type="text" id="searchArg" name="searchArg" placeholder="Enter a Region ID" value="@searchArg" />
                 <br />
                 <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Submit" />&nbsp;&nbsp;
                 <input type="submit" id="formbutton" name="formbutton" class="btn" value="Clear" />
             </div>
             <div class="col-md-6">
                 <label for="RegionIDt" id="labelTwo">RegionID: </label>&nbsp;
-                <input type="text" id="RegionID" name="RegionID" readonly="readonly"/>
+                <input type="text" id="RegionID" name="RegionID" readonly="readonly" value="@regionId"/>
                 <br />
-                <label for="Description" id="Description">Description</label>
-                <input type="text" id="Description" name="formbutton" class="btn" value="Right" />
+                <label for="Description" id="Description">Description: </label>
+                <input type="text" id="Description" name="Description" class="btn" value="@description" />
             </div>
         </div>
 
