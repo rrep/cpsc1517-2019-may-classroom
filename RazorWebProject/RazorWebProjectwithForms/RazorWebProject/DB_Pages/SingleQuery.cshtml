@@ -1,8 +1,32 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Single Query";
+
+    var searchArg = Request.Form["searchArg"];
+    var thebutton = Request.Form["formbutton"];
 }
 
 @section banner{
     <h1>DataBase - Single Query</h1>
 }
+
+
+    <form id="theForm" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="searchArg" id="labelOne">Enter a Region ID:</label>
+                <input type="text" id="searchArg" name="searchArg" placeholder="Enter a Region ID" />
+                <br />
+                <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Submit" />&nbsp;&nbsp;
+                <input type="submit" id="formbutton" name="formbutton" class="btn" value="Clear" />
+            </div>
+            <div class="col-md-6">
+                <label for="RegionIDt" id="labelTwo">RegionID: </label>&nbsp;
+                <input type="text" id="RegionID" name="RegionID" readonly="readonly"/>
+                <br />
+                <label for="Description" id="Description">Description</label>
+                <input type="text" id="Description" name="formbutton" class="btn" value="Right" />
+            </div>
+        </div>
+
+    </form>
