@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Multi-Record Query";
+
+    var db = Database.Open("NWDB");
+
+}
+@section banner{
+    <h1>DataBase - Multi-Record Query</h1>
+
+    <blockquote>This is the first page of a two page query technique. This first page will load a dropdown list from data provided by the database. The page will pass the selected value from the dropdown list to the next page,
+    which will be responsible for displaying multiple records for the selected value</blockquote>
+}
+
+<form id="theForm" method="POST">
+    <div class="col-md-offset-3">
+        <label for="CategoryList" id="CategoryListLabel">
+            Select the category products to view:
+        </label>&nbsp;
+        <select id="CategoryList" name="CategoryList">
+            <!--categoryIDs are all numeric-->
+            <option value="0">Select...</option>
+        </select>&nbsp;&nbsp;
+        <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Submit" />&nbsp;&nbsp;
+    </div>
+
+</form>

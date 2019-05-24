@@ -38,30 +38,74 @@
     //the QuerySingle(command string[,comma delimited list of parameter values])
     //order of parameter values must match the order of placeholders.
 
-    var results = db.QuerySingle(queryCommand,searchArg);
+    var results = db.QuerySingle(queryCommand, searchArg);
 }
 
 @section banner{
     <h1>DataBase - Single Query</h1>
 }
 
+@{
+    if (IsPost)
+    {
+        //decide which button was pressed
+        if (thebutton.Equals("Clear"))
+        {
 
-    <form id="theForm" method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="searchArg" id="labelOne">Enter a Region ID:</label>
-                <input type="text" id="searchArg" name="searchArg" placeholder="Enter a Region ID" value="@searchArg" />
-                <br />
-                <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Submit" />&nbsp;&nbsp;
-                <input type="submit" id="formbutton" name="formbutton" class="btn" value="Clear" />
-            </div>
-            <div class="col-md-6">
-                <label for="RegionIDt" id="labelTwo">RegionID: </label>&nbsp;
-                <input type="text" id="RegionID" name="RegionID" readonly="readonly" value="@regionId"/>
-                <br />
-                <label for="Description" id="Description">Description: </label>
-                <input type="text" id="Description" name="Description" class="btn" value="@description" />
-            </div>
+            searchArg = "";
+            regionId = "";
+            description = "";
+
+        }
+        else
+        {
+            // validate that a vlue was supplied to search
+            if (string.IsNullOrEmpty(searchArg))
+            {
+                <p><span style="color:hotpink; font-weight:bold;">Enter a search term.</span></p>
+            }
+            //test if sql returned any data for processing
+            // QueryString(), you will check for null
+            // Query(), you will check dataset.Count() == 0
+            else if (results == null)
+            {
+                <p><span style="color:hotpink; font-weight:bold;">NO REGION FOUND FOR THE ID: @searchArg</span></p>
+                //optionally, consider emptying your result output fields
+                searchArg = "";
+                description = "";
+            }
+            else
+            {
+                //accessing the data from your sql data output can be done
+                // a) via an index xxx[n] where n = 0,1,2, etc... (it is a column that is within your data)
+                // b) via property name   xxxx.PropertyName
+                //       (The PropertyName is the column title string for your query
+                // @results (the object you created to hold your results
+                // @results.RegionDescription (RegionDescription is the column name - you can also add your own , which is saved as a property of your results object)
+                description = results.RegionDescription;
+                regionId = results.RegionID.ToString();
+
+            }
+        }
+    }
+}
+
+<form id="theForm" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="searchArg" id="labelOne">Enter a Region ID:</label>
+            <input type="text" id="searchArg" name="searchArg" placeholder="Enter a Region ID" value="@searchArg" />
+            <br />
+            <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Submit" />&nbsp;&nbsp;
+            <input type="submit" id="formbutton" name="formbutton" class="btn" value="Clear" />
         </div>
+        <div class="col-md-6">
+            <label for="RegionIDt" id="labelTwo">RegionID: </label>&nbsp;
+            <input type="text" id="RegionID" name="RegionID" readonly="readonly" value="@regionId" />
+            <br />
+            <label for="Description" id="Description">Description: </label>
+            <input type="text" id="Description" name="Description" class="readonly" value="@description" />
+        </div>
+    </div>
 
-    </form>
+</form>

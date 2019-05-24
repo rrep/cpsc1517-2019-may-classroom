@@ -116,6 +116,7 @@
     <Content Include="SamplePages\Checkboxes.cshtml" />
     <Content Include="SamplePages\dropdownlist.cshtml" />
     <Content Include="DB_Pages\SingleQuery.cshtml" />
+    <Content Include="DB_Pages\MultiRecordQuery.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
