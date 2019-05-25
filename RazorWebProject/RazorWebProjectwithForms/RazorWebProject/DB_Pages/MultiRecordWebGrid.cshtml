@@ -17,16 +17,29 @@
     }
 
     //
-
+    var categoryName = "";
     var db = Database.Open("NWDB");
     var queryCommand = @"Select ProductID, ProductName, QuantityPerUnit, UnitPrice, Discontinued
-         From Products
-         Where CategoryID = @0";
+ From Products
+ Where CategoryID = @0";
+
+    var queryCommandTwo = @"Select CategoryID, CategoryName
+         From Categories
+         ORDER BY CategoryName";
 
     var results = db.Query(queryCommand, categoryString);
+    var results2 = db.Query(queryCommandTwo);
+
+    foreach (var obj in results2)
+    {
+        if (obj.CategoryID.ToString() == categoryString)
+        {
+            categoryName = obj.CategoryName;
+        }
+    }
 
     //webgrid is an object, so you need to create an instance of the object.
-    //the "default" constructor for webgrid needs to be given the dataset 
+    //the "default" constructor for webgrid needs to be given the dataset
     var gridinstance = new WebGrid(results);
 }
 @section banner{
@@ -37,7 +50,12 @@
     </blockquote>
 }
 
-@foreach (var obj in results)
-{
-    <p>@obj.ProductName</p>
-}
+<span style="font-size: xx-large; font-weight:bold;">Database Webgrid</span><br />
+<div class="row">
+    <div class="col-md-offset-1">
+        <span style="font-size:x-large">Products for @categoryName</span>
+        <!--default webgrid-->
+        @gridinstance.GetHtml()
+    </div>
+
+</div>
