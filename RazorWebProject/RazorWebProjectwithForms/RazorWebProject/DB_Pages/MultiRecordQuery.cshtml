@@ -1,17 +1,45 @@
 ﻿@{
+    //any variable within the opening coding block is global to the page.
     Layout = "~/_Layout.cshtml";
     Page.Title = "Multi-Record Query";
 
     var db = Database.Open("NWDB");
+    var queryCommand = @"Select CategoryID, CategoryName
+                 From Categories
+                 ORDER BY CategoryName";
 
+    var results = db.Query(queryCommand);
 }
 @section banner{
     <h1>DataBase - Multi-Record Query</h1>
 
-    <blockquote>This is the first page of a two page query technique. This first page will load a dropdown list from data provided by the database. The page will pass the selected value from the dropdown list to the next page,
-    which will be responsible for displaying multiple records for the selected value</blockquote>
+    <blockquote>
+        This is the first page of a two page query technique. This first page will load a dropdown list from data provided by the database. The page will pass the selected value from the dropdown list to the next page,
+        which will be responsible for displaying multiple records for the selected value
+    </blockquote>
 }
 
+@if (IsPost)
+{
+    //any variable within the IsPost coding block dies at the end of the coding block.
+    var choice = Request.Form["CategoryList"];
+
+    //did the user actually make a category selection?
+    if (choice.Equals("0"))
+    {
+        <p class="col-md-offset-5"><span style="color:hotpink; font-weight:bold;">( ͠° ͟ʖ ͡°)  Select a category ( ͠° ͟ʖ ͡°) .</span></p>
+    }
+    else
+    {
+        //pass data to another page
+        //use the Response structure with the .Redirect() method
+        //syntax
+        //Response.Redirect("relative page name[?label=value[&label=value]]")
+        Response.Redirect("MultiRecordWebGrid.cshtml?cid=" + choice);
+        // if there was a second parameter, you would simply create a concatenated string
+    }
+
+}
 <form id="theForm" method="POST">
     <div class="col-md-offset-3">
         <label for="CategoryList" id="CategoryListLabel">
@@ -20,6 +48,13 @@
         <select id="CategoryList" name="CategoryList">
             <!--categoryIDs are all numeric-->
             <option value="0">Select...</option>
+            @{
+
+                foreach (var obj in results)
+                {
+                    <option value="@obj.CategoryID">@obj.CategoryName</option>
+                }
+            }
         </select>&nbsp;&nbsp;
         <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Submit" />&nbsp;&nbsp;
     </div>

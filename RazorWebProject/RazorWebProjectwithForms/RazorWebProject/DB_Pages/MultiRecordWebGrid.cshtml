@@ -1,0 +1,43 @@
+﻿@{
+    //any variable within the opening coding block is global to the page.
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Multi-Record Query";
+
+    //retrieve the passed data values. use the .QueryString structure of the Request
+    //syntax
+    //Request.QueryString["passeddatalabel"]
+    //if no label is specified on the url, the result will be null
+
+    var categoryString = Request.QueryString["cid"];
+
+    //Test to see if you actually received a value
+    if (string.IsNullOrEmpty(categoryString))
+    {
+        Response.Redirect("MultiRecordQuery.cshtml");
+    }
+
+    //
+
+    var db = Database.Open("NWDB");
+    var queryCommand = @"Select ProductID, ProductName, QuantityPerUnit, UnitPrice, Discontinued
+         From Products
+         Where CategoryID = @0";
+
+    var results = db.Query(queryCommand, categoryString);
+
+    //webgrid is an object, so you need to create an instance of the object.
+    //the "default" constructor for webgrid needs to be given the dataset 
+    var gridinstance = new WebGrid(results);
+}
+@section banner{
+    <h1>DataBase - Multi-Record Results</h1>
+
+    <blockquote>
+        This is the second page of a two page query technique. The second page will load a grid of data provided by the database. The page will use the selected value from the dropdown list of the previous page to display multiple records for the selected value using a webgrid object.
+    </blockquote>
+}
+
+@foreach (var obj in results)
+{
+    <p>@obj.ProductName</p>
+}
