@@ -8,6 +8,15 @@
          ORDER BY CategoryName";
 
     var results = db.Query(queryCommand);
+    var productId = "";
+    var ProductName = Request.Form["ProductName"];
+    var SupplierID = Request.Form["SupplierID"];
+    var CategoryID = Request.Form["CategoryID"];
+    var QuantityPerUnit = Request.Form["QuantityPerUnit"];
+    var UnitPrice = Request.Form["UnitPrice"];
+    var UnitsInStock = Request.Form["UnitsInStock"];
+    var UnitsOnOrder = Request.Form["UnitsOnOrder"];
+    var ReorderLevel = Request.Form["ReorderLevel"];
 }
 @section banner{
     <h1>DataBase: CRUD</h1>
@@ -15,7 +24,29 @@
 
     <form id="theform" method="post">
         <div class="row">
-
+            <div class="col-md-6 text-right">
+                <label for="ProductID">Product ID:</label><br />
+                <label for="ProductName">ProductName</label><br />
+                <label for="SupplierID">Supplier ID:</label><br />
+                <label for="CategoryID">Category ID:</label><br />
+                <label for="QuantityPerUnit">QTY:</label><br />
+                <label for="UnitPrice">Unit Price:</label><br />
+                <label for="UnitsInStock">QoH:</label><br />
+                <label for="UnitsOnOrder">Qoo:</label><br />
+                <label for="ReorderLevel">RoL:</label><br />
+            </div>
+            <div class="col-md-6 text-left">
+                <input type="text" readonly="readonly" id="ProductID" name="ProductID" value="@productId" /><br />
+                <input type="text"  id="ProductName" name="ProductName" value="@ProductName" /><br />
+                <input type="text"  id="SupplierID" name="SupplierID" value="@SupplierID" /><br />
+                <input type="text"  id="CategoryID" name="CategoryID" value="@CategoryID" /><br />
+                <input type="text"  id="QuantityPerUnit" name="QuantityPerUnit" value="@QuantityPerUnit" /><br />
+                <input type="text"  id="UnitPrice" name="UnitPrice" value="@UnitPrice" /><br />
+                <input type="text"  id="UnitsInStock" name="UnitsInStock" value="@UnitsInStock" /><br />
+                <input type="text"  id="UnitsOnOrder" name="UnitsOnOrder" value="@UnitsOnOrder" /><br />
+                <input type="text"  id="ReorderLevel" name="ReorderLevel" value="@ReorderLevel" /><br />
+                <br /><br />
+            </div>
         </div>
         <div class="row">
             <div class="text-center">
