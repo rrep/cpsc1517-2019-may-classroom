@@ -40,7 +40,9 @@
 
     //webgrid is an object, so you need to create an instance of the object.
     //the "default" constructor for webgrid needs to be given the dataset
-    var gridinstance = new WebGrid(results);
+    
+    //to control page size, specify the page size as you create your instance
+    var gridinstance = new WebGrid(results, rowsPerPage:5);
 }
 @section banner{
     <h1>DataBase - Multi-Record Results</h1>
@@ -55,7 +57,15 @@
     <div class="col-md-offset-1">
         <span style="font-size:x-large">Products for @categoryName</span>
         <!--default webgrid-->
-        @gridinstance.GetHtml()
+        @*gridinstance.GetHtml()*@
+        <!--
+        Customized webgrid
+            a) use botstrap classes to spread outthe columsn -->
+        @gridinstance.GetHtml(
+       tableStyle: "table table-bordered table-striped hover", 
+       mode: WebGridPagerModes.All,
+       firstText: "Start",
+       lastText: "End")
     </div>
 
 </div>
