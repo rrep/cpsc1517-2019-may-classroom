@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "CRUD Page";
+
+    var db = Database.Open("NWDB");
+    var queryCommand = @"Select CategoryID, CategoryName
+         From Categories
+         ORDER BY CategoryName";
+
+    var results = db.Query(queryCommand);
+}
+@section banner{
+    <h1>DataBase: CRUD</h1>
+  }
+
+    <form id="theform" method="post">
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <input type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Add" />
+                <input type="submit" id="formbutton" name="formbutton" class="btn" value="Clear" />
+            </div>
+        </div>
+    </form>

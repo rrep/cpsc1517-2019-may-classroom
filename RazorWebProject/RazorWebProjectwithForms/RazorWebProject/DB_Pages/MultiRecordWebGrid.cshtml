@@ -64,7 +64,8 @@
         b) customized the Pager (rowsPerPage on the new WebGrid command above)
         c) select specific columns for use. columns: instancename.Columns()
             within the .Columns method, you specify each column you want off your record set
-            to do this you will use gridInstance.Column(columnName: "xxx", header: "xxx")-->
+            to do this you will use gridInstance.Column(columnName: "xxx", header: "xxx")
+            d) add an additional field to the grid that does not exist from the query-->
         @gridinstance.GetHtml(
        tableStyle: "table table-bordered table-striped hover",
        mode: WebGridPagerModes.All,
@@ -74,10 +75,13 @@
            gridinstance.Column(columnName: "ProductID", header: "ID", canSort:true),
            gridinstance.Column(columnName: "ProductName", header: "Product", canSort: true),
            gridinstance.Column(columnName: "UnitPrice", header: "$", canSort: false, format: (item) => item.UnitPrice.ToString("0.00")),
-           gridinstance.Column(columnName: "ProductID", header: "DISC", canSort: false, format: @<input name="Discontinued" type="checkbox" value="@item.Discontinued" disabled="disabled"
-                                                                                                        @(item.Discontinued == true ? "checked" : null) />)
+           gridinstance.Column(columnName: "Discontinued", header: "DISC", canSort: false, format: @<input name="Discontinued" type="checkbox" value="@item.Discontinued" disabled="disabled"
+                                                                                                        @(item.Discontinued == true ? "checked" : null) />),
+           gridinstance.Column(header:"",
+           format: @<text><a href="~/DB_Pages/WebGridDestination.cshtml?pid=@item.ProductName" onclick="return confirm('Are you sure you wish to view the product details of @item.ProductName')">View</a></text>)
                      ))<!--the above line is a tanary operator that will change the value to "checked" if the property is true-->
-
+        <br />
+        <a href="MultiRecordQuery.cshtml">Back To Original Page</a>
     </div>
 
 </div>
