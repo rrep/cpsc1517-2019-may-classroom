@@ -12,7 +12,36 @@
     var UnitsInStock = "";
     var UnitsOnOrder = "";
     var ReorderLevel = "";
+
+    //obtain two lists: SupplierList and CategoryList
+    var db = Database.Open("NWDB");
+    //create the command for your supplier query
+    var supplierQuery = @"SELECT SupplierID, CompanyName
+                  from Suppliers
+                  Order By CompanyName";
+
+
+    var categoryQuery = @"SELECT CategoryID,CategoryName
+                  from Categories
+                  Order By CategoryName";
+
+    var supplierList = db.Query(supplierQuery);
+    var categoryList = db.Query(categoryQuery);
+
+    //these validator controls execute on the client and server sides
+    //we will start by validation product name
+    Validation.Add("ProductName",
+        Validator.Required("Product name is required."),
+        Validator.StringLength(160, 1, "Product name is limited to 160 characters"));
+    Validation.Add("QuantityPerUnit",
+    Validator.StringLength(20, 1, "Quantity Per Unit is limited to 2 characters"));
+    Validation.Add("UnitPrice",
+    Validator.Range(0.0, double.MaxValue, "Price must be dollar amount 0.00 or greater."));
+    Validation.Add("UnitsInStock", Validator.Range(0, Int16.MaxValue, "Need more than that"));
+    Validation.Add("UnitsOnOrder", Validator.Range(0, Int16.MaxValue, "Need more than that"));
+    Validation.Add("ReorderLevel", Validator.Range(0, Int16.MaxValue, "Need more than that"));
 }
+
 @section banner{
     <h1>DataBase: CRUD</h1>
 }
@@ -28,8 +57,8 @@
     {
         productId = "";
         ProductName = Request.Form["ProductName"];
-        SupplierID = Request.Form["SupplierID"];
-        CategoryID = Request.Form["CategoryID"];
+        SupplierID = Request.Form["supplierList"];
+        CategoryID = Request.Form["categoryList"];
         QuantityPerUnit = Request.Form["QuantityPerUnit"];
         UnitPrice = Request.Form["UnitPrice"];
         UnitsInStock = Request.Form["UnitsInStock"];
@@ -39,38 +68,45 @@
         //assume for now that all data is valid.
 
         //you should and are expected to perform crud operations within user friendly error handling - using a try catch
-        try
-        {
-            var db = Database.Open("NWDB");
-            var insertCommand = @"Insert
-                       Into PRODUCTS
-                        (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
-                       Values
-                        (@0, @1, @2, @3, @4, @5, @6, @7, 'False')";
+        if (Validation.IsValid()) {
+            try
+            {
+                db = Database.Open("NWDB");
+                var insertCommand = @"Insert
+           Into PRODUCTS
+            (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
+           Values
+            (@0, @1, @2, @3, @4, @5, @6, @7, 'False')";
 
-            var newID = db.Execute(insertCommand,
-                ProductName,
-                string.IsNullOrEmpty(SupplierID) ? null : SupplierID,
-                string.IsNullOrEmpty(CategoryID) ? null : CategoryID,
-                string.IsNullOrEmpty(QuantityPerUnit) ? null : QuantityPerUnit,
-                string.IsNullOrEmpty(UnitPrice) ? null : UnitPrice,
-                string.IsNullOrEmpty(UnitsInStock) ? null : UnitsInStock,
-                string.IsNullOrEmpty(UnitsOnOrder) ? null : UnitsInStock,
-                string.IsNullOrEmpty(ReorderLevel) ? null : ReorderLevel);
+                var newID = db.Execute(insertCommand,
+                    ProductName,
+                    string.IsNullOrEmpty(SupplierID) ? null : SupplierID,
+                    string.IsNullOrEmpty(CategoryID) ? null : CategoryID,
+                    string.IsNullOrEmpty(QuantityPerUnit) ? null : QuantityPerUnit,
+                    string.IsNullOrEmpty(UnitPrice) ? null : UnitPrice,
+                    string.IsNullOrEmpty(UnitsInStock) ? null : UnitsInStock,
+                    string.IsNullOrEmpty(UnitsOnOrder) ? null : UnitsInStock,
+                    string.IsNullOrEmpty(ReorderLevel) ? null : ReorderLevel);
 
             <p class="text-center well" style="color: lightseagreen; font-weight:bolder;">Product Has Been Added</p>
-            //what is returned to the "newID" thing is the rows affected, not the new id.
-            var queryCommand = "Select ProductID from PRODUCTS where ProductName = @0";
-            var result = db.QueryValue(queryCommand, ProductName);
-            productId = result.ToString();
-        }
-        catch (Exception ex)
-        {
+                //what is returned to the "newID" thing is the rows affected, not the new id.
+                var queryCommand = "Select ProductID from PRODUCTS where ProductName = @0";
+                var result = db.QueryValue(queryCommand, ProductName);
+                productId = result.ToString();
+            }
+            catch (Exception ex)
+            {
             <p class="text-center well" style="color: firebrick; font-weight:bolder;">@ex.Message</p>
+            }
         }
     }
 }
-
+<!--Step 2 of validation is to setup the display control
+    a) you can setup a single place general display for validation
+    b) place validation display control beside the field in question
+    -->
+@Html.ValidationSummary()
+@* html.validation summary will put all of the errors in one place when the form is submitted. dont put both the summary display or display beside each one of your fields*@
 <form id="theform" method="post">
     <div class="row">
         <div class="col-md-6 text-right">
@@ -87,8 +123,37 @@
         <div class="col-md-6 text-left">
             <input type="text" readonly="readonly" id="ProductID" name="ProductID" value="@productId" /><br />
             <input type="text" id="ProductName" name="ProductName" value="@ProductName" /><br />
-            <input type="text" id="SupplierID" name="SupplierID" value="@SupplierID" /><br />
-            <input type="text" id="CategoryID" name="CategoryID" value="@CategoryID" /><br />
+            <select id="SupplierList" name="SupplierList" value="@SupplierID">
+                @foreach (var item in supplierList)
+                {
+                    if (SupplierID == item.SupplierID.ToString())
+                    {
+                        <option value="@item.SupplierID" selected>@item.CompanyName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.SupplierID">@item.CompanyName</option>
+                    }
+                }
+            </select><br />
+
+            @*category dropdown select*@
+            <select id="CategoryList" name="CategoryList" value="@CategoryID">
+                @foreach (var item in categoryList)
+                {
+                    if (CategoryID == item.CategoryID.ToString())
+                    {
+                        <option value="@item.CategoryID">@item.CategoryName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.CategoryID">@item.CategoryName</option>
+                    }
+
+                }
+            </select><br />
+
+
             <input type="text" id="QuantityPerUnit" name="QuantityPerUnit" value="@QuantityPerUnit" /><br />
             <input type="text" id="UnitPrice" name="UnitPrice" value="@UnitPrice" /><br />
             <input type="text" id="UnitsInStock" name="UnitsInStock" value="@UnitsInStock" /><br />
