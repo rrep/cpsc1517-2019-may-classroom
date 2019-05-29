@@ -1,4 +1,16 @@
 ﻿@{
+    /*
+     * We initially have validator validation that comes from razor forms,
+     * then we use html validation to catch some things if we want them to be a certain type. This is done through the type attribute of the input tag. 
+     * then we can use logic to catch any other things that we need to do to put it in.
+     *
+    */
+
+
+
+
+
+
     Layout = "~/_Layout.cshtml";
     Page.Title = "CRUD Page";
 
@@ -17,13 +29,13 @@
     var db = Database.Open("NWDB");
     //create the command for your supplier query
     var supplierQuery = @"SELECT SupplierID, CompanyName
-                  from Suppliers
-                  Order By CompanyName";
+  from Suppliers
+  Order By CompanyName";
 
 
     var categoryQuery = @"SELECT CategoryID,CategoryName
-                  from Categories
-                  Order By CategoryName";
+  from Categories
+  Order By CategoryName";
 
     var supplierList = db.Query(supplierQuery);
     var categoryList = db.Query(categoryQuery);
@@ -68,15 +80,31 @@
         //assume for now that all data is valid.
 
         //you should and are expected to perform crud operations within user friendly error handling - using a try catch
-        if (Validation.IsValid()) {
+        if (Validation.IsValid())
+        {
+            var validFlag = true;
+            //you may be required to do some validation using logic.
+            //we will assume that supplier and category must be chosen.
+            if (SupplierID.Equals("0"))
+            {
+                validFlag = false;
+                <p class="text-center well" style="color: firebrick; font-weight:bolder;">Please input a supplierID</p>
+            }
+            if (CategoryID.Equals("0"))
+            {
+                validFlag = false;
+                <p class="text-center well" style="color: firebrick; font-weight:bolder;">Please input a categoryID</p>
+            }
+
+            if (validFlag) { 
             try
             {
                 db = Database.Open("NWDB");
                 var insertCommand = @"Insert
-           Into PRODUCTS
-            (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
-           Values
-            (@0, @1, @2, @3, @4, @5, @6, @7, 'False')";
+    Into PRODUCTS
+    (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
+    Values
+    (@0, @1, @2, @3, @4, @5, @6, @7, 'False')";
 
                 var newID = db.Execute(insertCommand,
                     ProductName,
@@ -88,7 +116,7 @@
                     string.IsNullOrEmpty(UnitsOnOrder) ? null : UnitsInStock,
                     string.IsNullOrEmpty(ReorderLevel) ? null : ReorderLevel);
 
-            <p class="text-center well" style="color: lightseagreen; font-weight:bolder;">Product Has Been Added</p>
+                <p class="text-center well" style="color: lightseagreen; font-weight:bolder;">Product Has Been Added</p>
                 //what is returned to the "newID" thing is the rows affected, not the new id.
                 var queryCommand = "Select ProductID from PRODUCTS where ProductName = @0";
                 var result = db.QueryValue(queryCommand, ProductName);
@@ -96,7 +124,8 @@
             }
             catch (Exception ex)
             {
-            <p class="text-center well" style="color: firebrick; font-weight:bolder;">@ex.Message</p>
+                <p class="text-center well" style="color: firebrick; font-weight:bolder;">@ex.Message</p>
+            }
             }
         }
     }
