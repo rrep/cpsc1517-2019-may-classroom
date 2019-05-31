@@ -1,7 +1,6 @@
 ﻿@{
     Page.Title = "Product Search";
-    //Layout = "~/_Layout.cshtml;
-    Layout = "~/_LayoutMenu.cshtml";
+    Layout = "~/_Layout.cshtml";
     var productsearch = Request.Form["ProductSearch"];
 
     var db = Database.Open("NWDB");
@@ -20,7 +19,7 @@
   
     <form id="theForm" action="" method="post">
         <div class="col-sm-3">
-            <label id="forProductSearch">Product ID</label><br/>
+            <label id="forProductSearch">Product Name</label><br/>
             <input type="text" name="ProductSearch" value=" @productsearch"><br/><br/>
             <button type="submit" class="btn btn-primary" name="Search" id="theSearch">Search</button>
                     
@@ -52,12 +51,21 @@
                         grid.Column(columnName: "CategoryID", header: "Cat"),
                         grid.Column(columnName: "UnitPrice", header: "$"),
                         grid.Column(columnName: "UnitsInStock", header: "UOS"),
-                        grid.Column(header:"", format:@<text><a href="~/DBPages/ProductEdit.cshtml?pid=@item.ProductID">Edit</a></text>)
+                        grid.Column(header:"", format:@<text><a href="~/DB_Pages/ProductEdit.cshtml?pid=@item.ProductID">Edit</a></text>)
                         ));
                     }
                 }
             }
         </div>
-      
+     @*Since the webgrid is in the form (method: post), webgrid's method which is Get, causes a conflict in paging
+         The following script causes a post to happen on the webgrid's paging*@
+        <script type="text/javascript">
+            var links = $('a[href*=page], a[href=*sort]'), form = $('form');
+            links.click(function () {
+                form.attr("action", this.href);
+                $(this).attr("href", "javascript:");
+                form.submit();
+            });
+        </script>
     </form>
 </div> 
