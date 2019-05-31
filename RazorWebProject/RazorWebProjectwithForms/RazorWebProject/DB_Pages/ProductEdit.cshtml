@@ -27,6 +27,7 @@
         //discontinued is a checkbox
         //the possible values from the check box is null (not checked) or "on" (checked)
         //the acceptable sql values for a bit are 0 and 1
+        //this is happening because it gets returned as a null or an r. If it's not a null, that means it's not checked as discontinued.
         if (discontinued==null)
         {
             discontinued = "0";
@@ -65,7 +66,7 @@
 {
     if (thebutton.Equals("cancel"))
     {
-       <p>Your cancel code goes here</p>
+       <p>Action Cancelled.<br /> <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></p>
     }
     else if (thebutton.Equals("delete"))
     {
@@ -104,19 +105,19 @@ else //for IsPost
     <div class="form-group">
 
         <form id="theForm" action="" method="post">
-            <div class="col-sm-6">
-                <label id="forProductID">Product ID</label><br />
-                <label id="forProductName">Product Name</label><br />
-                <label id="forSupplierList">Supplier</label><br />
-                <label id="forCategoryList">Category</label><br />
-                <label id="forQuantityPerUnit">Quantity Per Unit</label><br />
-                <label id="forUnitPrice">Unit Price</label><br />
-                <label id="forUnitsInStock">Units In Stock</label><br />
-                <label id="forUnitsOnOrder">Units On Order</label><br />
-                <label id="forReorderLevel">ReorderLevel</label><br />
-                <label id="forDiscontinued">Discontinued</label><br />
+            <div class="col-sm-6 text-right">
+                <label id="label1" for="ProductID">Product ID</label><br />
+                <label id="label2" for="ProductName">Product Name</label><br />
+                <label id="label3" for="SupplierList">Supplier</label><br />
+                <label id="label4" for="CategoryList">Category</label><br />
+                <label id="label5" for="QuantityPerUnit">Quantity Per Unit</label><br />
+                <label id="label6" for="UnitPrice">Unit Price</label><br />
+                <label id="label7" for="UnitsInStock">Units In Stock</label><br />
+                <label id="label8" for="UnitsOnOrder">Units On Order</label><br />
+                <label id="label9" for="ReorderLevel">ReorderLevel</label><br />
+                <label id="label10" for="Discontinued">Discontinued</label><br />
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 text-left">
                 <input type="text" name="ProductID" value="@productid" readonly /><br/>
                 <input type="text" name="ProductName" value="@productname"  /><br/>
                 <select name="SupplierList">
@@ -161,7 +162,7 @@ else //for IsPost
                     <input type="checkbox" name="Discontinued" value="0" /><br /><br />
                 }
             </div>
-            <div class="row">
+            <div class="row text-center">
                 <button type="submit" name="theButton" id="theUpdate" class="btn btn-primary" value="update">Update</button>&nbsp;&nbsp;&nbsp;
                 <button type="submit" name="theButton" id="theDelete" class="btn btn-primary" value="delete" >Delete</button>&nbsp;&nbsp;&nbsp;
                 <button type="submit" name="theButton" id="theCancel" class="btn btn-primary" value="cancel" >Cancel</button>
