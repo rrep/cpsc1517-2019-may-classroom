@@ -70,7 +70,48 @@
     }
     else if (thebutton.Equals("delete"))
     {
-        <p>Your delete code goes here</p>
+        //create the delete command if physical, or the update command if logical (discontinued is the logical flag for deletion in this db)
+        if (string.IsNullOrEmpty(productid))
+        {
+            <p><span style="color:mediumpurple; font-weight:bolder;">No Product Selected. <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></span></p>
+        }
+        else
+        {
+            try
+
+            {
+
+                //this is the logical delete
+                var updateCommand = @"Update PRODUCTS
+                                       SET
+                                       Discontinued=@0 where ProductId=@1";
+
+                var rowsaffected = db.Execute(updateCommand,
+                     discontinued, productid);
+
+                //physical delete
+                //var deleteCommand = @"Delete PRODUCTS
+                //                       where
+                //                       ProductId=@1";
+
+                //var rowsaffectedd = db.Execute(deleteCommand,
+                //     productid);
+
+                if (rowsaffected == 0)
+                {
+                    <p><span style="color:mediumpurple; font-weight:bolder;">No Update Done. Product not found. <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></span></p>
+                    productid = "";
+                }
+                else
+                {
+                    <p><span style="color:green; font-weight:bolder;">@productname has been discontinued.</span></p>
+                }
+            }
+            catch (Exception ex)
+            {
+                <p><span style="color:mediumpurple; font-weight:bolder;">@ex.Message. <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></span></p>
+            }
+        }
     }
     else
     {
@@ -86,10 +127,10 @@
             try
             {
                 var updateCommand = @"Update PRODUCTS
-            SET
-            ProductName=@0,
-            SupplierID=@1,
-            CategoryID=@2, QuantityPerUnit=@3, UnitPrice=@4, UnitsInStock=@5, UnitsOnOrder=@6, ReorderLevel=@7, Discontinued=@8 where ProductId=@9";
+SET
+ProductName=@0,
+SupplierID=@1,
+CategoryID=@2, QuantityPerUnit=@3, UnitPrice=@4, UnitsInStock=@5, UnitsOnOrder=@6, ReorderLevel=@7, Discontinued=@8 where ProductId=@9";
 
                 var rowsaffected = db.Execute(updateCommand,
                     productname,
@@ -115,7 +156,6 @@
                 <p><span style="color:mediumpurple; font-weight:bolder;">@ex.Message. <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></span></p>
             }
         }
-        <p>Your update code goes here</p>
     }
 }
 else //for IsPost
