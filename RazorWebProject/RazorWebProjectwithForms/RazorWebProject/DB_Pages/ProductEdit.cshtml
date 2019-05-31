@@ -82,6 +82,7 @@
             {
 
                 //this is the logical delete
+                //products are a logical delete because you still need the records for old sales
                 var updateCommand = @"Update PRODUCTS
                                        SET
                                        Discontinued=@0 where ProductId=@1";
@@ -99,7 +100,7 @@
 
                 if (rowsaffected == 0)
                 {
-                    <p><span style="color:mediumpurple; font-weight:bolder;">No Update Done. Product not found. <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></span></p>
+                    <p><span style="color:mediumpurple; font-weight:bolder;">Product was not discontinued. Product not found. <a href="~/DB_Pages/ProductSearch.cshtml">Back to product search.</a></span></p>
                     productid = "";
                 }
                 else
